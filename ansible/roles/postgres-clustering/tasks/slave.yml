@@ -1,0 +1,25 @@
+---
+- name: stop postgresql
+  become: true
+  ansible.builtin.systemd_service:
+    state: stopped
+    name: postgresql
+
+- name: remove postgres dir
+  become: true
+  ansible.builtin.file:
+    state: absent
+    path: /var/lib/postgresql/15/main
+
+- name: do pg_basebackup
+  become: yes
+  throttle: 1
+  become_method: sudo
+  become_user: postgres
+  ansible.builtin.shell: "PGPASSWORD={{ replica_password }} pg_basebackup -h {{ primary_address }} -U replica -X stream -v -R -D /var/lib/postgresql/15/main/"
+
+- name: start postgresql
+  become: true
+  ansible.builtin.systemd_service:
+    state: started
+    name: postgresql

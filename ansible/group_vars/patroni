@@ -1,0 +1,13 @@
+---
+etcd_map:
+  patroni-1:
+    ip: 10.2.255.248
+    name: patroni-1
+  patroni-2:
+    ip: 10.2.255.252
+    name: patroni-2
+  patroni-3:
+    ip: 10.2.255.245
+    name: patroni-3
+primary_address: 10.2.255.248
+replica_password: replicaPass

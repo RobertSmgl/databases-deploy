@@ -1,0 +1,9 @@
+---
+- name: install stolon
+  hosts: stolon
+  gather_facts: no
+  strategy: free
+  roles:
+    - etcd
+    - postgres
+    - stolon

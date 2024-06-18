@@ -1,0 +1,10 @@
+--- 
+- name: config master
+  ansible.builtin.include_tasks:
+    file: master.yml
+  when: slave == "no"
+
+- name: config slave
+  ansible.builtin.include_tasks:
+    file: slave.yml
+  when: slave == "yes"

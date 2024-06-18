@@ -1,0 +1,13 @@
+---
+etcd_map:
+  stolon-1:
+    ip: 10.2.255.243
+    name: stolon-1
+  stolon-2:
+    ip: 10.2.255.254
+    name: stolon-2
+  stolon-3:
+    ip: 10.2.255.249
+    name: stolon-3
+primary_address: 10.2.255.243
+replica_password: replicaPass

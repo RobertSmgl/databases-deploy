@@ -1,0 +1,11 @@
+---
+- name: install patroni
+  hosts: patroni
+  gather_facts: no
+  strategy: free
+  roles:
+    - etcd
+    - postgres
+    - pip
+    - patroni
+    - haproxy

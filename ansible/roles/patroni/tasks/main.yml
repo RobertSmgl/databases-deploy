@@ -1,0 +1,60 @@
+---
+- name: disable postgresql.service
+  become: true
+  ansible.builtin.systemd_service:
+    name: postgresql.service
+    state: stopped
+    enabled: false
+
+- name: create symbolic links of postgres bins
+  become: true
+  ansible.builtin.shell: ln -s /usr/lib/postgresql/15/bin/* /usr/local/bin
+  ignore_errors: true
+
+- name: install psycopg module and patroni
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-psycopg2
+
+- name: install patroni via pip
+  become: true
+  ansible.builtin.pip:
+    name: patroni[etcd3]
+    state: present
+
+- name: make dirs for patroni
+  become: true
+  ansible.builtin.file:
+    recurse: true
+    state: directory
+    path: /home/postgres/data
+    mode: 0700
+    owner: postgres
+    group: postgres
+
+- name: delivery patroni config
+  become: true
+  ansible.builtin.template:
+    src: patroni.yaml
+    dest: /etc/patroni.yaml
+    owner: postgres
+    group: postgres
+    mode: 0600
+
+- name: delivery patroni service
+  become: true
+  ansible.builtin.template:
+    src: patroni.service
+    dest: /etc/systemd/system/patroni.service
+
+- name: start patroni
+  become: true
+  ansible.builtin.systemd_service:
+    name: patroni.service
+    state: started
+    enabled: true
+    daemon_reload: true
+

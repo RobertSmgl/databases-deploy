@@ -1,0 +1,61 @@
+---
+- name: update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: install additional packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+     - curl
+     - ca-certificates
+     - acl
+
+- name: install postgres packages
+  become: true
+  ansible.builtin.apt:
+    name: postgresql-common
+    state: present
+  
+- name: configure postgres repo
+  become: true
+  ansible.builtin.shell: yes | /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+
+- name: update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: install postgres packages
+  become: true
+  ansible.builtin.apt:
+    name: "postgresql-{{ pg_version }}"
+    state: present
+
+- name: delivery pg_hba.conf
+  become: true
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
+    dest: "/etc/postgresql/{{ pg_version }}/main/pg_hba.conf"
+    group: postgres
+    owner: postgres
+    mode: '0640'
+
+- name: delivery postgresql.conf
+  become: true
+  ansible.builtin.template:
+    src: postgresql.conf.j2
+    dest: "/etc/postgresql/{{ pg_version }}/main/postgresql.conf"
+    group: postgres
+    owner: postgres
+    mode:  '0644'
+
+- name: postgresql service restart
+  become: true
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: postgresql

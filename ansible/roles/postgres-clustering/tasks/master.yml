@@ -1,0 +1,24 @@
+---
+- name: setup postgres password
+  become: yes
+  become_method: sudo
+  become_user: postgres
+  ansible.builtin.shell: "psql -c \"ALTER USER postgres WITH PASSWORD 'pogres';\""
+
+- name: setup postgres password
+  become: yes
+  become_method: sudo
+  become_user: postgres
+  ansible.builtin.shell: "psql -c \"CREATE ROLE replica WITH REPLICATION LOGIN PASSWORD '{{ replica_password }}';\""
+
+- name: setup postgres password
+  become: yes
+  become_method: sudo
+  become_user: postgres
+  ansible.builtin.shell: "psql -c \" CREATE ROLE testuser WITH LOGIN PASSWORD 'test-user';\""
+
+- name: setup postgres password
+  become: yes
+  become_method: sudo
+  become_user: postgres
+  ansible.builtin.shell: "psql -c \"GRANT SELECT ON ALL TABLES IN SCHEMA public TO testuser;\""

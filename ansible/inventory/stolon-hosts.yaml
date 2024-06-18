@@ -1,0 +1,11 @@
+stolon:
+  hosts:
+    stolon-1:
+      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+      ansible_user: rsamigullin
+    stolon-2:
+      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+      ansible_user: rsamigullin
+    stolon-3:
+      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+      ansible_user: rsamigullin

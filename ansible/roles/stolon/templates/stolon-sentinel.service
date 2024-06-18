@@ -1,0 +1,19 @@
+[Unit]
+Description=stolon-sentinel
+Documentation=https://github.com/sorintlab/stolon
+After=network.target
+Wants=network-online.target
+
+
+[Service]
+Type=simple
+User=root
+PermissionsStartOnly=true
+#ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
+ExecStart=/usr/bin/stolon-sentinel --cluster-name stolon --store-backend etcdv3 --store-endpoints {% for curHost in etcd_map %}http://{{ etcd_map[curHost].ip }}:2379{{ "," if not loop.last else "" }}{% endfor %} --store-skip-tls-verify
+Restart=on-abnormal
+#RestartSec=10s
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

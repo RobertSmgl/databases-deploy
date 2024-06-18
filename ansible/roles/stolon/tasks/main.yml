@@ -1,0 +1,93 @@
+---
+- name: download stolon release
+  ansible.builtin.get_url:
+    url: https://github.com/sorintlab/stolon/releases/download/v0.17.0/stolon-v0.17.0-linux-amd64.tar.gz
+    dest: /home/rsamigullin/stolon-v0.17.0-linux-amd64.tar.gz
+    mode: '0666'
+
+- name: upack stolon
+  ansible.builtin.unarchive:
+    src: /home/rsamigullin/stolon-v0.17.0-linux-amd64.tar.gz
+    dest: /home/rsamigullin/
+    remote_src: yes
+
+- name: Copy stolon binary
+  become: true
+  ansible.builtin.copy:
+    src: "/home/rsamigullin/stolon-v0.17.0-linux-amd64/bin/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    remote_src: yes
+    mode: '755'
+  loop:
+    - stolonctl
+    - stolon-sentinel
+    - stolon-keeper
+    - stolon-proxy
+
+- name: delivery stolon services
+  become: true
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+  loop:
+    - stolon-keeper.service
+    - stolon-proxy.service
+    - stolon-sentinel.service
+
+- name: delivery stolon services
+  become: true
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "/home/rsamigullin/{{ item }}"
+  loop:
+    - replica-password-file
+    - su-password-file
+
+- name: reload systemd daemon
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: init cluster
+  ansible.builtin.shell: echo "yes" | stolonctl --cluster-name stolon --store-backend=etcdv3 init
+  when: slave == "no"
+
+- name: Ensure group "stolon" exists
+  become: true
+  ansible.builtin.group:
+    name: stolon
+    state: present
+
+- name: Create a user 'stolon'
+  become: true
+  ansible.builtin.user:
+    name: stolon
+    create_home: no
+    group: stolon
+
+- name: create directory
+  become: true
+  ansible.builtin.file:
+    name: /home/stolon/postgres
+    recurse: true
+    state: directory
+    owner: stolon
+    group: stolon
+
+- name: stop postgres and disable
+  become: true
+  ansible.builtin.systemd_service:
+    name: postgresql.service
+    state: stopped
+    enabled: false
+
+- name: start systemd services
+  become: true
+  ansible.builtin.systemd_service:
+    enabled: true
+    state: started
+    name: "{{ item }}"
+  loop:
+    - stolon-keeper.service
+    - stolon-sentinel.service
+    - stolon-proxy.service

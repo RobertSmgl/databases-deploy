@@ -1,0 +1,7 @@
+---
+ansible_private_ip: 10.2.255.248
+replication_allow:
+- 10.2.255.248
+- 10.2.255.252
+- 10.2.255.245
+slave: 'no'

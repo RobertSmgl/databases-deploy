@@ -1,0 +1,238 @@
+nodes_map = {
+    postgres-1 = {
+        name      = "postgres-1"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "postgres-1"
+        }
+        network_interface = {
+            nat          = true
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - {keys}"
+        }
+    }
+    postgres-2 = {
+        name      = "postgres-2"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "postgres-2"
+        }
+        network_interface = {
+            nat          = false
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    postgres-3 = {
+        name      = "postgres-3"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "postgres-3"
+        }
+        network_interface = {
+            nat          = false
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    patroni-1 = {
+        name      = "patroni-1"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "patroni-1"
+        }
+        network_interface = {
+            nat          = true
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    patroni-2 = {
+        name      = "patroni-2"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "patroni-2"
+        }
+        network_interface = {
+            nat          = false
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    patroni-3 = {
+        name      = "patroni-3"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "patroni-3"
+        }
+        network_interface = {
+            nat          = false
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    stolon-1 = {
+        name      = "stolon-1"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "stolon-1"
+        }
+        network_interface = {
+            nat          = true
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    stolon-2 = {
+        name      = "stolon-2"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "stolon-2"
+        }
+        network_interface = {
+            nat          = false
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+    stolon-3 = {
+        name      = "stolon-3"
+        resources = {
+            cores         = 2
+            memory        = 2
+        }
+        boot_disk = {
+            disk_index = "stolon-3"
+        }
+        network_interface = {
+            nat          = false
+            subnet_index = "postgres"
+        }
+        metadata = {
+            ssh-keys = "#cloud-config\nusers:\n  - name: rsamigullin\n    groups: sudo\n    shell: /bin/bash\n    sudo: 'ALL=(ALL) NOPASSWD:ALL'\n    ssh-authorized-keys:\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILZTD50cyBwbjZI3+2sK4PKgEJl0KClHz355uTgXDfH/ rsamigullin@Roberts-MacBook-Pro.local\n      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqsbrFB9ILK0rxhHMmnZT20iYbqImLmCUqJJRZn7KXd rsamigullin@Roberts-MacBook-Pro.local"
+        }
+    }
+}
+
+boot_disk_map = {
+    postgres-1 = {
+        name     = "postgres-1"
+        size     = 20
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-ssd" 
+    }
+    postgres-2 = {
+        name     = "postgres-2"
+        size     = 20
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-ssd" 
+    }
+    postgres-3 = {
+        name     = "postgres-3"
+        size     = 20
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-ssd" 
+    }
+    patroni-1 = {
+        name     = "patroni-1"
+        size     = 93
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-ssd-nonreplicated" 
+    }
+    patroni-2 = {
+        name     = "patroni-2"
+        size     = 93
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-ssd-nonreplicated" 
+    }
+    patroni-3 = {
+        name     = "patroni-3"
+        size     = 93
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-ssd-nonreplicated" 
+    }
+
+    stolon-1 = {
+        name     = "stolon-1"
+        size     = 20
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-hdd" 
+    }
+    stolon-2 = {
+        name     = "stolon-2"
+        size     = 20
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-hdd" 
+    }
+    stolon-3 = {
+        name     = "stolon-3"
+        size     = 20
+        zone     = "ru-central1-a"
+        image_id = "fd808e721rc1vt7jkd0o"
+        type     = "network-hdd" 
+    }
+}
+
+subnet_map = {
+    postgres = {
+        name           = "postgres"
+        network_index  = "postgres"
+        v4_cidr_blocks = ["10.2.255.240/28"]
+    }
+}
+
+network_map = {
+    postgres ={
+        name = "postgres"
+    }
+}
+
+

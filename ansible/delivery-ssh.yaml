@@ -1,0 +1,6 @@
+---
+- name: delivery ssh keys to master hosts
+  hosts: master
+  gather_facts: no
+  roles:
+    - ssh

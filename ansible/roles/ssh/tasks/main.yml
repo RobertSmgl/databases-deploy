@@ -1,0 +1,12 @@
+---
+- name: delivery private key
+  ansible.builtin.copy:
+    src: ../files/ycloud_ed25519
+    dest: ~/.ssh/id_ed25519
+    mode: '0600'
+
+- name: delivery public key
+  ansible.builtin.copy:
+    src: ../files/ycloud_ed25519.pub
+    dest: ~/.ssh/id_ed25519.pub
+    mode: '0644'

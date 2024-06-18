@@ -1,0 +1,11 @@
+patroni:
+  hosts:
+    patroni-1:
+      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+      ansible_user: rsamigullin
+    patroni-2:
+      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+      ansible_user: rsamigullin
+    patroni-3:
+      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+      ansible_user: rsamigullin
