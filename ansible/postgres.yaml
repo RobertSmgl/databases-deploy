@@ -5,9 +5,3 @@
   gather_facts: no
   roles:
     - postgres
-
-- name: run cluster
-  hosts: postgres
-  gather_facts: no
-  roles:
-    - postgres-clustering

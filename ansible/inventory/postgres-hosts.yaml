@@ -1,11 +1,4 @@
 postgres:
   hosts:
     postgres-1:
-      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-      ansible_user: rsamigullin
-    postgres-2:
-      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-      ansible_user: rsamigullin
-    postgres-3:
-      ansible_ssh_common_args: -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-      ansible_user: rsamigullin
+      ansible_host: 192.168.5.97
