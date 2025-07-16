@@ -1,0 +1,70 @@
+---
+- name: Add PostgreSQL GPG key
+  get_url:
+    url: "{{ pg_repo_key }}"
+    dest: /etc/apt/trusted.gpg.d/postgresql.gpg
+    mode: '0644'
+  when: not pg_skip_key_verification
+
+- name: Add PostgreSQL APT repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/postgresql.gpg] {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
+    filename: "{{ pg_repo_file }}"
+    state: present
+  when: not pg_skip_key_verification
+
+- name: Add PostgreSQL APT repository
+  apt_repository:
+    repo: "deb [trusted=yes] {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
+    filename: "{{ pg_repo_file }}"
+    state: present
+  when: pg_skip_key_verification
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install PostgreSQL
+  apt:
+    name: "postgresql-{{ pg_version }}"
+    state: present
+
+- name: Deploy postgresql.conf
+  template:
+    src: postgresql.conf.j2
+    dest: "{{ pg_config_dir }}/postgresql.conf"
+    owner: postgres
+    group: postgres
+    mode: '0644'
+  register: postgresql_conf_result
+
+- name: Deploy pg_hba.conf
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{ pg_config_dir }}/pg_hba.conf"
+    owner: postgres
+    group: postgres
+    mode: '0640'
+  register: pg_hba_conf_result
+
+- name: Deploy custom systemd unit for PostgreSQL
+  template:
+    src: postgresql.service.j2
+    dest: "/etc/systemd/system/postgres-{{ pg_cluster_name }}.service"
+    mode: '0644'
+
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: true
+
+- name: Restart PostgreSQL if configuration changed
+  systemd:
+    name: "postgres-{{ pg_cluster_name }}.service"
+    state: restarted
+  when: postgresql_conf_result.changed or pg_hba_conf_result.changed
+
+- name: Enable and start PostgreSQL custom service
+  systemd:
+    name: "postgres-{{ pg_cluster_name }}.service"
+    enabled: true
+    state: started

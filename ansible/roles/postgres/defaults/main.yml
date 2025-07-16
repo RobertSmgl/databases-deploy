@@ -1,5 +1,15 @@
 ---
+#play configuration section
 pg_version: 15
+pg_repo_path: "http://apt.postgresql.org/pub/repos/apt/"
+pg_repo_key: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+pg_repo_file: "pgdg"
+pg_skip_key_verification: false
+pg_cluster_name: main
+pg_data_dir: "/var/postgres/{{ pg_cluster_name }}"
+
+
+#postgresql configuration section
 pg_listen_addresses: '*'
 pg_listen_port: 5432
 pg_max_connections: 100
