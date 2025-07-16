@@ -1,7 +1,7 @@
 ---
 - name: stop postgresql
   become: true
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     state: stopped
     name: postgresql
 
@@ -20,6 +20,6 @@
 
 - name: start postgresql
   become: true
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     state: started
     name: postgresql

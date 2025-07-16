@@ -91,6 +91,11 @@ local   all             postgres                                peer
 
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
 host    all             testuser       0.0.0.0/0               md5
+{% if pg_users is defined and pg_users | length > 0 %}
+{% for item in pg_users %}
+host    {{ item.database | default('all') }}    {{ item.user | default('testuser') }}    {{ item.address | default('0.0.0.0/0') }}    {{ item.method | default('md5') }}
+{% endfor %}
+{% endif %}
 # "local" is for Unix domain socket connections only
 local   all             all                                     peer
 # IPv4 local connections:

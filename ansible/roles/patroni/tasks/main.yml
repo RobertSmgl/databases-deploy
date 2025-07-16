@@ -1,7 +1,7 @@
 ---
 - name: disable postgresql.service
   become: true
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     name: postgresql.service
     state: stopped
     enabled: false
@@ -52,7 +52,7 @@
 
 - name: start patroni
   become: true
-  ansible.builtin.systemd_service:
+  ansible.builtin.systemd:
     name: patroni.service
     state: started
     enabled: true

@@ -1,0 +1,7 @@
+---
+pg_version: 15
+pg_listen_addresses: '*'
+pg_listen_port: 5432
+pg_max_connections: 100
+pg_reserved_connections: 0
+pg_superuser_reserved_connections: 0
