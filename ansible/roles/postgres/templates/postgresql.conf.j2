@@ -59,7 +59,6 @@ external_pid_file = '{{ pg_data_dir }}/{{ pg_version }}-main.pid'
 listen_addresses = '{{ pg_listen_addresses }}'
 port = {{ pg_listen_port }}
 max_connections = {{ pg_max_connections }}
-reserved_connections = {{ pg_reserved_connections }}
 superuser_reserved_connections = {{ pg_superuser_reserved_connections }}
 
 unix_socket_directories = '/var/run/postgresql'	# comma-separated list of directories
