@@ -47,6 +47,18 @@
     mode: '0640'
   register: pg_hba_conf_result
 
+- name: List existing PostgreSQL clusters
+  command: pg_lsclusters --no-header
+  register: pg_clusters
+
+- name: Check if cluster already exists
+  set_fact:
+    pg_cluster_exists: "{{ pg_clusters.stdout_lines | select('search', '^' ~ pg_version ~ '\\s+' ~ pg_cluster_name ~ '\\s+') | list | length > 0 }}"
+
+- name: Initialize cluster if not exists
+  command: "pg_createcluster --start-conf=manual --createclusterconf={{ pg_data_dir }}/postgresql.conf --datadir=/var/postgres/grafana/data {{ pg_version }} {{ pg_cluster_name }}"
+  when: not pg_cluster_exists
+
 - name: Deploy custom systemd unit for PostgreSQL
   template:
     src: postgresql.service.j2

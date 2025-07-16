@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/pg_ctlcluster {{ pg_version }} {{ pg_cluster_name }} start -- --pgdata=/your/config/path
+ExecStart=/usr/bin/pg_ctlcluster {{ pg_version }} {{ pg_cluster_name }} start
 ExecStop=/usr/bin/pg_ctlcluster {{ pg_version }} {{ pg_cluster_name }} stop
-ExecReload=/usr/bin/pg_ctlcluster {{ pg_version }} {{ pg_cluster_name }} reload -- --pgdata=/your/config/path
+ExecReload=/usr/bin/pg_ctlcluster {{ pg_version }} {{ pg_cluster_name }} reload
 Restart=on-failure
 
 [Install]
