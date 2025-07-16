@@ -1,6 +1,6 @@
 postgres:
-  pg_cluster_name: grafana
-  pg_listen_port: 5434
   hosts:
     postgres-1:
       ansible_host: 192.168.5.97
+      pg_cluster_name: grafana
+      pg_listen_port: 5434
