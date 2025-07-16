@@ -3,6 +3,9 @@
   file:
     path: "{{ pg_data_dir }}"
     state: directory
+  with_items:
+    - "{{ pg_data_dir }}"
+    - "{{ pg_data_dir }}/data"
 
 - name: Setup PostgreSQL on Debian/Ubuntu
   include_tasks: prepare_debian_sys.yml
