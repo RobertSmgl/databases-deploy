@@ -56,7 +56,7 @@
     pg_cluster_exists: "{{ pg_clusters.stdout_lines | select('search', '^' ~ pg_version ~ '\\s+' ~ pg_cluster_name ~ '\\s+') | list | length > 0 }}"
 
 - name: Initialize cluster if not exists
-  command: "pg_createcluster --start-conf=manual --createclusterconf={{ pg_data_dir }}/postgresql.conf --datadir=/var/postgres/grafana/data {{ pg_version }} {{ pg_cluster_name }}"
+  command: "pg_createcluster --start-conf=manual --createclusterconf={{ pg_data_dir }}/postgresql.conf --datadir={{ pg_data_dir }}/data {{ pg_version }} {{ pg_cluster_name }}"
   when: not pg_cluster_exists
 
 - name: Deploy custom systemd unit for PostgreSQL
