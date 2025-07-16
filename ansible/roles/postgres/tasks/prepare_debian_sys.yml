@@ -32,7 +32,7 @@
 - name: Deploy postgresql.conf
   template:
     src: postgresql.conf.j2
-    dest: "{{ pg_config_dir }}/postgresql.conf"
+    dest: "{{ pg_data_dir }}/postgresql.conf"
     owner: postgres
     group: postgres
     mode: '0644'
@@ -41,7 +41,7 @@
 - name: Deploy pg_hba.conf
   template:
     src: pg_hba.conf.j2
-    dest: "{{ pg_config_dir }}/pg_hba.conf"
+    dest: "{{ pg_data_dir }}/pg_hba.conf"
     owner: postgres
     group: postgres
     mode: '0640'
