@@ -13,6 +13,12 @@
     state: present
   when: not pg_skip_key_verification
 
+- name: Add PostgreSQL GPG key
+  file:
+    dest: /etc/apt/trusted.gpg.d/postgresql.gpg
+    state: absent
+  when: pg_skip_key_verification
+
 - name: Add PostgreSQL APT repository
   apt_repository:
     repo: "deb [trusted=yes] {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
