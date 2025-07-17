@@ -5,4 +5,4 @@ postgres:
   vars:
     pg_cluster_name: grafana
     pg_listen_port: 5434
-    pg_skip_key_verification: true
+    pg_skip_key_verification: false
