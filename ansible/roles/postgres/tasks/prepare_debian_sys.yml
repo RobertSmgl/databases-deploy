@@ -1,30 +1,42 @@
 ---
-- name: Add PostgreSQL GPG key
-  get_url:
-    url: "{{ pg_repo_key }}"
-    dest: /etc/apt/trusted.gpg.d/postgresql.gpg
-    mode: '0644'
-  when: not pg_skip_key_verification
+# - name: Add PostgreSQL GPG key
+#   get_url:
+#     url: "{{ pg_repo_key }}"
+#     dest: /etc/apt/trusted.gpg.d/postgresql.gpg
+#     mode: '0644'
+#   when: not pg_skip_key_verification
 
-- name: Add PostgreSQL APT repository
-  apt_repository:
-    repo: "deb {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
-    filename: "{{ pg_repo_file }}"
+# - name: Add PostgreSQL APT repository
+#   apt_repository:
+#     repo: "deb {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
+#     filename: "{{ pg_repo_file }}"
+#     state: present
+#   when: not pg_skip_key_verification
+
+# - name: remove PostgreSQL GPG key
+#   file:
+#     dest: /etc/apt/trusted.gpg.d/postgresql.gpg
+#     state: absent
+#   when: pg_skip_key_verification
+
+# - name: Add PostgreSQL APT repository
+#   apt_repository:
+#     repo: "deb [trusted=yes] {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
+#     filename: "{{ pg_repo_file }}"
+#     state: present
+#   when: pg_skip_key_verification
+
+- name: install postgresql based packages
+  apt:
+    name: "{{ item }}"
     state: present
-  when: not pg_skip_key_verification
+    update_cache: yes
+  with_items:
+    - postgresql-contrib
+    - libpq-dev
 
-- name: remove PostgreSQL GPG key
-  file:
-    dest: /etc/apt/trusted.gpg.d/postgresql.gpg
-    state: absent
-  when: pg_skip_key_verification
-
-- name: Add PostgreSQL APT repository
-  apt_repository:
-    repo: "deb [trusted=yes] {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
-    filename: "{{ pg_repo_file }}"
-    state: present
-  when: pg_skip_key_verification
+- name: automatically configure repo
+  bash: /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
 
 - name: Update APT cache
   apt:
