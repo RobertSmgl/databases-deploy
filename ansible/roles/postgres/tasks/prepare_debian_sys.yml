@@ -8,7 +8,7 @@
 
 - name: Add PostgreSQL APT repository
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/postgresql.gpg] {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
+    repo: "deb {{ pg_repo_path }} {{ ansible_distribution_release }}-pgdg main"
     filename: "{{ pg_repo_file }}"
     state: present
   when: not pg_skip_key_verification
