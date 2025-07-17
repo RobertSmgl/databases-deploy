@@ -35,6 +35,15 @@
   apt:
     update_cache: yes
 
+- name: install postgresql based packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - postgresql-contrib
+    - libpq-dev
+
 - name: Install PostgreSQL
   apt:
     name: "postgresql-{{ pg_version }}"
